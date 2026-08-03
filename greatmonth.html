@@ -105,6 +105,11 @@
   .feat .ic{font-size:24px;margin-bottom:8px}
   .feat b{display:block;font-size:15.5px;margin-bottom:6px;color:var(--ink)}
   .feat span{color:var(--ink2);font-size:13.5px;line-height:1.6}
+  .prod-tag{display:inline-block;margin-left:6px;padding:2px 9px;border-radius:999px;font-size:11px;
+    font-weight:600;color:var(--purple);background:rgba(124,92,255,.14);border:1px solid rgba(124,92,255,.24);vertical-align:middle}
+  .bullets{margin:8px 0 0;padding-left:0;list-style:none}
+  .bullets li{position:relative;padding-left:16px;margin:5px 0;font-size:13.5px;color:var(--ink2);line-height:1.6}
+  .bullets li::before{content:"✓";position:absolute;left:0;color:var(--purple);font-weight:800}
 
   /* 场景直播分组：两列对照布局 */
   .zibg{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;margin-top:6px}
@@ -732,6 +737,39 @@
         </tbody>
       </table>
       <p style="margin-top:12px;color:var(--purple);font-weight:700">→ 简单理解：预约保你开播有人气，下单保你直播有 GMV。</p>
+    </div>
+
+    <div class="card">
+      <h3>投什么 · <b style="color:var(--purple)">ADQ 弹药库</b>（优化目标 × 投放产品）</h3>
+      <p class="lead" style="margin-bottom:14px">先选对<b style="color:var(--purple)">优化目标</b>，再搭配合适的<b style="color:var(--purple)">投放产品</b>，弹药对了才能打准。</p>
+      <table>
+        <thead><tr><th style="width:26%">优化目标</th><th style="width:36%">定位</th><th>何时用</th></tr></thead>
+        <tbody>
+          <tr><td><b>⭐ 下单</b></td><td>直接关联 GMV，<b>绝对核心</b></td><td>直播当天主力，预算占比最大</td></tr>
+          <tr><td><b>⭐ 直播预约</b></td><td>大场蓄水第一选择</td><td>直播前 3-7 天，锁定确定性流量</td></tr>
+          <tr><td>下单-下单ROI（双目标）</td><td>系统直接按 ROI 优化，30 天长归因</td><td>退货率低的类目（3C家电、食品），需加白</td></tr>
+          <tr><td>24小时下单</td><td>24 小时归因</td><td>退货率高的类目（服饰、美妆）</td></tr>
+          <tr><td>直播观看</td><td>提升直播间在线人气</td><td>开播初期冷启动、平播期补量保人气</td></tr>
+        </tbody>
+      </table>
+      <h4 style="margin-top:22px">🆕 两大新产品</h4>
+      <div class="grid g2" style="margin-top:12px">
+        <div class="feat">
+          <div class="ic">🛠️</div>
+          <b>小店艾米 <span class="prod-tag">全量开放 · 无需加白</span></b>
+          <span>以跑量为核心的智能投放产品，系统自动调控，支持<b>短直双开、单链路、全店托管</b>等多种场景，减少操作复杂度。</span>
+        </div>
+        <div class="feat">
+          <div class="ic">📹</div>
+          <b>视频号原生内容推广 <span class="prod-tag">全量开放 · 无需加白</span></b>
+          <span>用达人主页短视频投放下单 OG——<b>内容即广告</b>。</span>
+          <ul class="bullets">
+            <li>原生体验：用户感知为自然内容</li>
+            <li>零成本素材：复用已发布挂车短视频</li>
+            <li>全时段覆盖：直播赚爆发，短视频赚长尾</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="bars">
