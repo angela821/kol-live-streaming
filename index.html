@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美好生活节 · 达播培训</title>
+<style>
+  :root{
+    --ink:#2b2750; --ink2:#5c5880; --ink3:#8a87a8;
+    --purple:#6d4aff; --purple-l:#8b6bff; --blue:#3d6bff; --blue-l:#5e8aff;
+    --pink:#b06bff; --cyan:#2bb8d6;
+    --line:#ece9fb; --card:#ffffff; --soft:#f6f4ff; --soft2:#eef2ff;
+    --grad:linear-gradient(135deg,#7c5cff 0%,#3d6bff 100%);
+    --grad-soft:linear-gradient(135deg,rgba(124,92,255,.10),rgba(61,107,255,.10));
+    --shadow:0 10px 30px rgba(109,74,255,.10);
+    --shadow-h:0 16px 44px rgba(109,74,255,.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(900px 500px at 12% -8%,rgba(124,92,255,.16),transparent 60%),
+      radial-gradient(800px 600px at 92% 6%,rgba(61,107,255,.14),transparent 55%),
+      radial-gradient(700px 600px at 50% 108%,rgba(176,107,255,.12),transparent 60%),
+      linear-gradient(165deg,#f7f5ff,#eef2ff 55%,#f0f7ff);
+    background-attachment:fixed;
+    min-height:100vh;line-height:1.72;
+  }
+  /* 顶部标题栏 */
+  .topbar{backdrop-filter:blur(16px);
+    background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,255,255,.82));
+    border-bottom:1px solid var(--line);box-shadow:0 6px 24px rgba(109,74,255,.08)}
+  .topbar .wrap{max-width:1180px;margin:0 auto;padding:14px 24px 10px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand .dot{width:40px;height:40px;border-radius:13px;background:var(--grad);
+    box-shadow:0 8px 22px rgba(124,92,255,.40);flex:none;display:flex;align-items:center;justify-content:center;font-size:21px}
+  .brand h1{font-size:21px;font-weight:800;letter-spacing:.5px;color:var(--ink)}
+  .brand h1 b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand .tag{color:var(--ink3);font-size:12px;margin-left:auto}
+  .tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+    position:sticky;top:0;z-index:100;
+    background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(255,255,255,.90));
+    backdrop-filter:blur(14px);
+    margin:14px -24px 0;padding:12px 24px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;cursor:pointer;user-select:none;padding:10px 16px;border-radius:16px;
+    font-size:12.5px;font-weight:600;color:var(--ink2);background:var(--soft);
+    border:1px solid var(--line);transition:.25s;line-height:1.45;text-align:center}
+  .tab:hover{color:var(--purple);border-color:var(--purple-l);transform:translateY(-1px)}
+  .tab.active{color:#fff;background:var(--grad);border-color:transparent;box-shadow:0 8px 20px rgba(124,92,255,.38)}
+  .tab .num{display:block;opacity:.7;font-weight:800;margin-bottom:3px;font-size:11px}
+  main{max-width:1180px;margin:0 auto;padding:0 24px 90px}
+  .panel{display:block;animation:fade .5s ease}
+  .panel + .panel{margin-top:44px;padding-top:44px;border-top:2px dashed rgba(124,92,255,.25)}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* 背景置顶区 */
+  .hero{padding:18px 0 6px}
+  .hero h2{font-size:34px;font-weight:900;line-height:1.25;margin-bottom:10px}
+  .hero h2 b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--ink2);font-size:15.5px;max-width:860px}
+  .by{display:inline-block;margin:4px 0 2px;padding:4px 12px;border-radius:999px;
+    background:rgba(124,92,255,.10);border:1px solid rgba(124,92,255,.22);
+    color:var(--purple);font-size:12.5px;font-weight:600}
+  .hero .bg-card{margin-top:18px;background:var(--card);border:1px solid var(--line);
+    border-radius:18px;padding:22px 26px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .hero .bg-card .ico{flex:none;width:46px;height:46px;border-radius:13px;background:var(--grad-soft);
+    border:1px solid rgba(124,92,255,.22);display:flex;align-items:center;justify-content:center;font-size:22px}
+  .hero .bg-card .txt b{color:var(--purple);font-size:15.5px}
+  .hero .bg-card .txt p{font-size:14px;margin-top:2px;color:var(--ink2)}
+  .pledge{margin-top:14px;padding:13px 18px;border-radius:13px;
+    background:linear-gradient(135deg,rgba(43,184,214,.14),rgba(124,92,255,.12));
+    border:1px solid rgba(43,184,214,.32);border-left:4px solid var(--cyan);
+    color:var(--ink);font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:10px}
+  .pledge .ck{flex:none;width:30px;height:30px;border-radius:9px;background:var(--cyan);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 5px 14px rgba(43,184,214,.4)}
+  .pledge b{color:var(--cyan)}
+
+  .sec-title{font-size:27px;font-weight:800;margin-bottom:4px;color:var(--ink)}
+  .sec-title b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sec-sub{color:var(--ink2);font-size:14.5px;margin-bottom:24px}
+  .sec-sub b{color:var(--purple)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:24px 26px;margin-bottom:18px;box-shadow:var(--shadow);transition:.28s}
+  .card:hover{box-shadow:var(--shadow-h);transform:translateY(-2px);border-color:rgba(124,92,255,.28)}
+  .card h3{font-size:18px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px;color:var(--ink)}
+  .card h3::before{content:"";width:6px;height:19px;border-radius:4px;background:var(--grad);display:inline-block}
+  .card h4{font-size:15.5px;color:var(--purple);margin:16px 0 8px;font-weight:700}
+  .card p{color:var(--ink2);margin-bottom:9px;font-size:14.5px}
+  .card p:last-child{margin-bottom:0}
+  .lead{color:var(--ink)!important;font-size:15px}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .feat{background:var(--grad-soft);border:1px solid rgba(124,92,255,.20);border-radius:15px;padding:18px;transition:.28s}
+  .feat:hover{transform:translateY(-3px);border-color:var(--purple-l);box-shadow:var(--shadow-h)}
+  .feat .ic{font-size:24px;margin-bottom:8px}
+  .feat b{display:block;font-size:15.5px;margin-bottom:6px;color:var(--ink)}
+  .feat span{color:var(--ink2);font-size:13.5px;line-height:1.6}
+
+  /* 场景直播分组：两列对照布局 */
+  .zibg{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;margin-top:6px}
+  .zibg .col{background:var(--grad-soft);border:1px solid rgba(124,92,255,.22);
+    border-radius:15px;padding:18px;transition:.28s}
+  .zibg .col:hover{border-color:var(--purple-l);box-shadow:var(--shadow)}
+  .zibg .col h4{font-size:15.5px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .zibg .col h4 .tag{font-size:11.5px;padding:2px 9px;border-radius:999px;background:rgba(124,92,255,.16);
+    color:var(--purple);border:1px solid rgba(124,92,255,.26);font-weight:600}
+  .zibg .col .desc{color:var(--ink2);font-size:13px;margin-bottom:12px}
+  .zibg .col .imgs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .zibg .col .imgs .iw{border-radius:12px;overflow:hidden;border:1px solid var(--line);
+    box-shadow:0 6px 18px rgba(109,74,255,.12);background:#f6f4ff}
+  .zibg .col .imgs img{display:block;width:100%;height:auto;max-height:480px;object-fit:contain}
+  .zibg .col .imgs figcaption{text-align:center;color:var(--ink3);font-size:11.5px;margin-top:6px}
+  .zibg .col .one .iw img{height:auto;max-height:520px;object-fit:contain}
+  @media(max-width:720px){.zibg{grid-template-columns:1fr}.zibg .col .imgs img{height:150px}}
+
+  /* case 图文配对（小尺寸） */
+  .case-intro{margin:6px 0 18px;padding:13px 18px;background:var(--grad-soft);
+    border:1px solid rgba(124,92,255,.28);border-left:4px solid var(--purple);
+    border-radius:12px;color:var(--ink);font-size:14.5px;line-height:1.65;
+    display:flex;align-items:center;gap:12px}
+  .case-intro .li{flex:none;width:36px;height:36px;border-radius:10px;background:var(--grad);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;
+    box-shadow:0 6px 16px rgba(124,92,255,.40)}
+  .case-intro b{color:var(--purple);font-weight:800}
+  .case-intro .arr{margin-left:auto;flex:none;color:var(--purple-l);font-size:20px;font-weight:800;animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+  /* 程雷个人介绍 + 形象照 横排 */
+  .cheng{display:flex;gap:18px;align-items:center;background:var(--soft);
+    border:1px solid var(--line);border-radius:15px;padding:18px;margin:0 0 20px;transition:.28s}
+  .cheng:hover{border-color:var(--purple-l);box-shadow:var(--shadow)}
+  .cheng .ct{flex:1}
+  .cheng .ct b{display:block;font-size:16px;color:var(--ink);margin-bottom:6px}
+  .cheng .ct b em{font-style:normal;color:var(--purple)}
+  .cheng .ct p{color:var(--ink2);font-size:13.5px;line-height:1.7;margin:0}
+  .cheng .ph{flex:none;width:150px;text-align:center}
+  .cheng .ph .iw{border-radius:13px;overflow:hidden;border:1px solid var(--line);
+    box-shadow:0 8px 22px rgba(109,74,255,.16);background:#fff}
+  .cheng .ph img{display:block;width:100%;height:auto;max-height:200px;object-fit:contain}
+  .cheng .ph figcaption{color:var(--ink3);font-size:11.5px;margin-top:6px}
+  @media(max-width:620px){.cheng{flex-direction:column}.cheng .ph{width:100%}}
+
+  /* 三大品牌 case 横排卡 */
+  .brand-case{background:var(--soft);border:1px solid var(--line);border-radius:15px;
+    overflow:hidden;transition:.28s;display:flex;flex-direction:column}
+  .brand-case:hover{border-color:var(--purple-l);box-shadow:var(--shadow-h);transform:translateY(-3px)}
+  .brand-case .bimg{width:100%;background:#f6f4ff;display:flex;justify-content:center;align-items:center;height:420px;overflow:hidden}
+  .brand-case .bimg img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .brand-case .bctn{padding:15px 16px;flex:1}
+  .brand-case .bctn .tag{font-size:11px;padding:2px 9px;border-radius:999px;background:rgba(124,92,255,.14);
+    color:var(--purple);border:1px solid rgba(124,92,255,.24);font-weight:600;display:inline-block;margin-bottom:7px}
+  .brand-case .bctn b{display:block;font-size:14.5px;color:var(--ink);margin-bottom:7px}
+  .brand-case .bctn span{color:var(--ink2);font-size:13px;line-height:1.65}
+
+  .case{display:flex;gap:16px;align-items:flex-start;background:var(--soft);
+    border:1px solid var(--line);border-radius:15px;padding:16px;transition:.28s}
+  .case:hover{border-color:var(--purple-l);box-shadow:var(--shadow)}
+  .case .ctn{flex:1}
+  .case .ctn b{display:block;color:var(--purple);font-size:15px;margin-bottom:4px}
+  .case .ctn span{color:var(--ink2);font-size:13.5px;line-height:1.6}
+  .case .img{flex:none;width:170px}
+  .case .img .iw{border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 22px rgba(109,74,255,.14)}
+  .case .img img{display:block;width:100%;height:120px;object-fit:cover}
+  .case .img figcaption{text-align:center;color:var(--ink3);font-size:11.5px;margin-top:6px}
+  @media(max-width:620px){.case{flex-direction:column}.case .img{width:100%}.case .img img{height:auto}}
+
+  /* 图片通用 */
+  figure{margin:6px 0}
+  .img-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff}
+  .img-wrap img{display:block;width:100%;height:auto}
+  figcaption{text-align:center;color:var(--ink3);font-size:12px;margin-top:7px}
+
+  .pill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:600;
+    background:rgba(124,92,255,.12);border:1px solid rgba(124,92,255,.26);color:var(--purple);margin:0 5px 7px 0}
+  .pill.blue{background:rgba(43,184,214,.12);border-color:rgba(43,184,214,.3);color:var(--cyan)}
+  .pill.pink{background:rgba(176,107,255,.12);border-color:rgba(176,107,255,.3);color:var(--pink)}
+
+  .stat{text-align:center;padding:20px 12px}
+  .stat .big{font-size:38px;font-weight:900;line-height:1;background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .lbl{color:var(--ink2);font-size:13px;margin-top:9px;line-height:1.5}
+
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13.5px;overflow:hidden;border-radius:13px;box-shadow:var(--shadow)}
+  thead th{background:var(--grad);color:#fff;font-weight:700;padding:12px 13px;text-align:left}
+  tbody td{padding:11px 13px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+  tbody tr{background:#fff}
+  tbody tr:nth-child(even){background:var(--soft)}
+  tbody tr:hover{background:var(--soft2)}
+  tbody td:first-child{color:var(--ink);font-weight:600}
+
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:15px;align-items:flex-start;background:var(--soft);
+    border:1px solid var(--line);border-radius:15px;padding:17px 19px;transition:.28s}
+  .step:hover{transform:translateX(4px);border-color:var(--purple-l);box-shadow:var(--shadow)}
+  .step .no{flex:none;width:42px;height:42px;border-radius:12px;background:var(--grad);
+    display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;color:#fff;
+    box-shadow:0 6px 16px rgba(124,92,255,.4)}
+  .step b{display:block;font-size:15.5px;color:var(--ink);margin-bottom:3px}
+  .step span{color:var(--ink2);font-size:13.5px}
+
+  /* 五步流程条 */
+  .flow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .flow .f{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 14px;text-align:center;position:relative;box-shadow:var(--shadow);transition:.28s}
+  .flow .f:hover{transform:translateY(-3px);border-color:var(--purple-l)}
+  .flow .f .n{width:34px;height:34px;border-radius:10px;background:var(--grad);color:#fff;font-weight:900;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 9px;font-size:16px}
+  .flow .f b{display:block;font-size:15px;color:var(--ink);margin-bottom:3px}
+  .flow .f span{color:var(--ink2);font-size:12px;line-height:1.5}
+  .flow .f:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);
+    color:var(--purple-l);font-weight:800;z-index:2}
+
+  /* 条形图 */
+  .bars{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+  .bars .grp{margin-bottom:20px}
+  .bars .grp:last-child{margin-bottom:0}
+  .bars .gt{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .bars .gt .badge{font-size:11px;padding:2px 9px;border-radius:999px;background:var(--grad-soft);color:var(--purple);border:1px solid rgba(124,92,255,.24)}
+  .bars .row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .bars .row .lb{width:88px;flex:none;font-size:13px;color:var(--ink2);font-weight:600}
+  .bars .row .track{flex:1;height:26px;background:var(--soft);border-radius:8px;overflow:hidden;position:relative}
+  .bars .row .fill{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;
+    padding-right:10px;color:#fff;font-size:12.5px;font-weight:700;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .fill.purple{background:linear-gradient(90deg,#7c5cff,#9b7bff)}
+  .fill.blue{background:linear-gradient(90deg,#3d6bff,#5e8aff)}
+
+  /* 三阶段递增可视化 */
+  .stages{display:flex;gap:14px;align-items:flex-end;margin:14px 0 6px;position:relative}
+  .stages .sg{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0}
+  .stages .sg .bar{width:100%;border-radius:14px 14px 0 0;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding:14px 10px;color:#fff;
+    box-shadow:0 8px 22px rgba(124,92,255,.25);position:relative}
+  .stages .sg .bar .nm{font-size:14px;font-weight:800;text-align:center;line-height:1.35}
+  .stages .sg .bar .pct{font-size:11.5px;opacity:.9;margin-top:5px;text-align:center;line-height:1.4}
+  .stages .sg.s1 .bar{background:linear-gradient(180deg,#c3bbf7,#a89bff);height:120px}
+  .stages .sg.s2 .bar{background:linear-gradient(180deg,#a89bff,#7c5cff);height:185px}
+  .stages .sg.s3 .bar{background:linear-gradient(180deg,#7c5cff,#3d6bff);height:260px}
+  .stages .sg .desc{margin-top:13px;text-align:center;font-size:13px;color:var(--ink2);line-height:1.6;width:100%}
+  .stages .sg .desc b{display:block;color:var(--ink);font-size:13.5px;margin-bottom:3px}
+  .stages .sg .desc em{display:block;font-style:normal;color:var(--purple);font-size:12px;margin-top:4px}
+  .stages .thr{position:relative;height:14px;margin-bottom:6px}
+  .stages .thr::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px dashed var(--pink)}
+  .stages .thr span{position:absolute;right:0;top:50%;transform:translateY(-50%);background:var(--pink);color:#fff;
+    font-size:11.5px;font-weight:700;padding:3px 11px;border-radius:999px;white-space:nowrap;
+    box-shadow:0 4px 12px rgba(176,107,255,.4)}
+  .stages .sg.s3 .bar .badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+    background:#fff;color:var(--purple);font-size:11px;font-weight:700;padding:3px 10px;
+    border-radius:999px;border:1px solid var(--purple-l);white-space:nowrap;box-shadow:0 4px 12px rgba(124,92,255,.25)}
+  @media(max-width:720px){.stages{flex-direction:column;align-items:stretch}.stages .sg .bar{height:auto!important;min-height:70px}.stages .thr{display:none}}
+
+  /* 投放节奏时间轴 */
+  .tl{position:relative;padding-left:30px;margin:8px 0 4px}
+  .tl::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:var(--grad)}
+  .tl .ti{position:relative;margin-bottom:18px;background:var(--soft);border:1px solid var(--line);
+    border-radius:13px;padding:14px 16px;transition:.26s}
+  .tl .ti:hover{border-color:var(--purple-l);box-shadow:var(--shadow);transform:translateX(3px)}
+  .tl .ti::before{content:"";position:absolute;left:-26px;top:18px;width:14px;height:14px;border-radius:50%;
+    background:#fff;border:3px solid var(--purple);box-shadow:0 0 0 4px rgba(124,92,255,.18)}
+  .tl .ti.now::before{background:var(--purple);border-color:var(--pink)}
+  .tl .ti .when{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--grad);
+    padding:3px 11px;border-radius:999px;margin-bottom:7px}
+  .tl .ti .act{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px}
+  .tl .ti .why{font-size:13px;color:var(--ink2);line-height:1.6}
+  @media(max-width:720px){.tl{padding-left:26px}.tl .ti::before{left:-22px}}
+
+  /* 课后行动清单 */
+  .actions{background:linear-gradient(160deg,rgba(124,92,255,.10),rgba(61,107,255,.08));
+    border:1px solid rgba(124,92,255,.24);border-radius:18px;padding:22px 24px;margin-top:20px}
+  .actions .alist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px}
+  .actions .ai{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);
+    border-radius:13px;padding:14px 16px;transition:.26s}
+  .actions .ai:hover{border-color:var(--purple-l);box-shadow:var(--shadow);transform:translateY(-2px)}
+  .actions .ai .n{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);color:#fff;
+    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 5px 14px rgba(124,92,255,.35)}
+  .actions .ai .step-tag{font-size:11px;color:var(--purple);font-weight:700;display:block;margin-bottom:3px}
+  .actions .ai b{display:block;font-size:14.5px;color:var(--ink);margin-bottom:3px}
+  .actions .ai span{color:var(--ink2);font-size:12.5px;line-height:1.55}
+  @media(max-width:720px){.actions .alist{grid-template-columns:1fr}}
+
+  /* 头部达人背景信息条 */
+  .bg-info{margin:0 0 16px;padding:14px 18px;background:var(--soft);border:1px solid var(--line);
+    border-left:4px solid var(--purple);border-radius:12px}
+  .bg-info .tt{font-size:14px;color:var(--ink);font-weight:600;margin-bottom:4px}
+  .bg-info .tt b{color:var(--purple)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0}
+  .chain .ch{font-size:12.5px;font-weight:600;color:var(--purple);background:#fff;
+    border:1px solid rgba(124,92,255,.28);padding:4px 11px;border-radius:999px}
+  .chain .arr{color:var(--purple-l);font-weight:800;font-size:13px}
+  .bg-info .tip{font-size:13px;color:var(--ink2);line-height:1.6}
+  .bg-info .tip b{color:var(--ink)}
+
+  .quote{text-align:center;padding:30px;border-radius:18px;background:var(--grad-soft);
+    border:1px solid rgba(124,92,255,.28);font-size:20px;font-weight:800;color:var(--ink);line-height:1.7}
+  .quote small{display:block;font-size:14.5px;color:var(--ink2);font-weight:500;margin-top:8px}
+
+  a.link{color:var(--blue);text-decoration:none;border-bottom:1px dashed var(--blue)}
+  a.link:hover{color:var(--purple)}
+  .note{font-size:13px;color:var(--ink3);margin-top:6px}
+
+  .cta{text-align:center;padding:42px 24px;border-radius:22px;background:var(--grad);
+    border:1px solid rgba(124,92,255,.4);box-shadow:var(--shadow-h);color:#fff}
+  .cta h2{font-size:26px;font-weight:900;margin-bottom:8px}
+  .cta p{font-size:15px;opacity:.92}
+  footer{text-align:center;color:var(--ink3);font-size:12px;padding:26px 0 8px}
+
+  /* 回到顶部按钮 */
+  .totop{position:fixed;right:24px;bottom:24px;z-index:120;width:50px;height:50px;border-radius:50%;
+    background:var(--grad);color:#fff;border:none;cursor:pointer;font-size:22px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(124,92,255,.45);
+    opacity:0;visibility:hidden;transform:translateY(12px);transition:.3s}
+  .totop.show{opacity:1;visibility:visible;transform:none}
+  .totop:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(124,92,255,.55)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <div class="dot">🌙</div>
+      <h1>「鹅选美好生活月」<b>达播合作指引</b></h1>
+      <span class="tag">面向微信小店商家</span>
+    </div>
+    <section class="hero">
+      <h2>「鹅选美好生活月」<b>达播合作指引</b></h2>
+      <p>围绕「美好生活月」campaign 打造的面向微信小店商家的线上培训，帮助大家了解达播合作的重要性及其流程，并在结尾号召商家未来多多合作。</p>
+      <div class="by">出品：腾讯营销 · 消电日百中心 · 垂直电商达人团队</div>
+      <div class="bg-card">
+        <div class="ico">🚀</div>
+        <div class="txt">
+          <b>本次培训目标</b>
+          <p>帮助商家系统了解「达人带货」合作的全流程——从认识达播价值、到找选联做复五步法、再到借力 ADQ 放大 GMV，把"碰运气"变成一条可执行的流程，找到值得长期合作的达人伙伴。</p>
+        </div>
+      </div>
+      <div class="pledge">
+        <div class="ck">✓</div>
+        <div>学完本课，你即可<b>开始找达人带货</b>——从达人广场建名单到寄样合作，全流程跑通。</div>
+      </div>
+    </section>
+    <nav class="tabs" id="tabs">
+      <div class="tab active" data-tab="sec-1"><span class="num">01</span>什么是达播？<br>达播与店播的差异</div>
+      <div class="tab" data-tab="sec-2"><span class="num">02</span>为什么要做达播？<br>快速撬动GMV并沉淀内容</div>
+      <div class="tab" data-tab="sec-3"><span class="num">03</span>怎么做达播？<br>达人合作五步法</div>
+      <div class="tab" data-tab="sec-4"><span class="num">04</span>如何放大达播势能？<br>ADQ带来确定性增长</div>
+      <div class="tab" data-tab="sec-5"><span class="num">05</span>美好生活月的<br>达播矩阵</div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ 01 达播&店播差异 ============ -->
+  <section class="panel active" id="sec-1">
+    <div class="sec-title">什么是达播？<b>达播与店播的差异</b></div>
+    <div class="sec-sub">达人带货者生态，如何丰富视频号商家「<b>直播生意场</b>」？</div>
+
+    <div class="card">
+      <h3>自播 · 品牌常态经营</h3>
+      <p class="lead" style="margin-bottom:14px">品牌自播包含<b style="color:var(--purple)">日常店播</b>与<b style="color:var(--purple)">场景直播</b>两类，核心目的是沉淀私域、稳定基本盘。</p>
+      <div class="zibg" style="grid-template-columns:1fr 1fr">
+        <div class="col">
+          <h4>🏪 日常店播<span class="tag">店铺常态</span></h4>
+          <p class="desc">商家自有直播间常态化运营</p>
+          <div class="imgs">
+            <figure><div class="iw"><img src="images/image2.png" alt="日常店播 · 康巴赫新昌官方店"></div>
+              <figcaption>日常店播 · 商家自有直播间</figcaption></figure>
+          </div>
+        </div>
+        <div class="col">
+          <h4>🎬 场景直播<span class="tag">多场景</span></h4>
+          <p class="desc">展会 / 商超 / 工厂 / 仓库等多场景直播</p>
+          <div class="imgs">
+            <figure><div class="iw"><img src="images/image3.png" alt="场景直播 · 上海国际礼品展"></div>
+              <figcaption>场景直播 · 展会（上海国际礼品展）</figcaption></figure>
+            <figure><div class="iw"><img src="images/image4.png" alt="场景直播 · 工厂溯源"></div>
+              <figcaption>场景直播 · 工厂（溯源专场）</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>达播 · 达人带货直播</h3>
+      <p class="lead" style="margin-bottom:14px">达人直播分两类打法：<b style="color:var(--purple)">短直一体</b>用短视频预热前置引爆大场，<b style="color:var(--purple)">节点大场</b>多品组货引爆营销节点。</p>
+      <div class="zibg" style="grid-template-columns:1fr 1fr">
+        <div class="col">
+          <h4>⚡ 短直一体<span class="tag">预热前置</span></h4>
+          <p class="desc">短视频预热前置，引爆大场</p>
+          <p class="desc" style="margin-bottom:10px"><span class="pill blue">徐真诚在云南 × 罗莱超品日</span></p>
+          <div class="imgs">
+            <figure><div class="iw"><img src="images/徐真诚罗莱-短视频.png" alt="短直一体 · 短视频预热"></div>
+              <figcaption>短视频预热 · 徐真诚×罗莱</figcaption></figure>
+            <figure><div class="iw"><img src="images/徐真诚罗莱-大场.png" alt="短直一体 · 大场爆发"></div>
+              <figcaption>大场爆发 · 徐真诚×罗莱</figcaption></figure>
+          </div>
+        </div>
+        <div class="col">
+          <h4>🎯 节点大场<span class="tag">多品组货</span></h4>
+          <p class="desc">多品组货，引爆营销节点</p>
+          <p class="desc" style="margin-bottom:10px">
+            <span class="pill blue">演员曹颖 × 国际美妆专场</span>
+            <span class="pill blue">小韩夫妇 × 新疆驼奶溯源专场</span>
+          </p>
+          <div class="imgs">
+            <figure><div class="iw"><img src="images/曹颖国际美妆.png" alt="节点大场 · 曹颖国际美妆"></div>
+              <figcaption>国际美妆专场（曹颖）</figcaption></figure>
+            <figure><div class="iw"><img src="images/小韩夫妇新疆溯源.png" alt="节点大场 · 小韩夫妇新疆溯源"></div>
+              <figcaption>新疆驼奶溯源（小韩夫妇）</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 为什么做达播 ============ -->
+  <section class="panel" id="sec-2">
+    <div class="sec-title">为什么要做达播？<b>快速撬动 GMV 并沉淀内容</b></div>
+    <div class="sec-sub">达播帮助商家<b>快速入局小店生意</b>，并沉淀长期内容资产</div>
+
+    <div class="card">
+      <h3>新商家 · 快速入局小店生意</h3>
+      <div class="grid g2">
+        <div class="feat"><div class="ic">📣</div><b>扩大曝光</b><span>带货者拥有粉丝基础和内容创作能力，能通过短视频、直播将商品推送给更多潜在用户。</span></div>
+        <div class="feat"><div class="ic">💰</div><b>降低获客成本</b><span>相比自建推广团队，合作带货者可实现"按效果付费"，提升投入产出比。</span></div>
+        <div class="feat"><div class="ic">🤝</div><b>提升信任度</b><span>带货者以真实人设和专业内容分享商品，更易建立用户信任，促进转化。</span></div>
+        <div class="feat"><div class="ic">🎁</div><b>平台激励支持</b><span>参与"优选联盟"等计划的带货者，可获得流量扶持、佣金激励等政策支持。</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>品牌商家 · 好友日达播占比</h3>
+      <div class="grid g2">
+        <div class="stat"><div class="big">60%+</div><div class="lbl">某头部家纺品牌好友日<br>GMV 来自头部达人带货，带动店铺新客增长</div></div>
+        <div class="stat"><div class="big">85%</div><div class="lbl">某头部厨具品牌好友日<br>达播占比，首日大场爆发系数 <b style="color:var(--purple)">25 倍</b></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>案例 · 短直一体（@程雷 cl）</h3>
+      <div class="case-intro">
+        <div class="li">⚡</div>
+        <div><b>短直一体</b>：除最直观的 GMV 增长外，达人还能帮品牌沉淀内容价值。本案例拆解程雷团队如何把"短视频种草 + 直播转化"做成一体闭环。</div>
+      </div>
+
+      <!-- 程雷个人介绍 + 形象照（横排） -->
+      <div class="cheng">
+        <div class="ct">
+          <b>@程雷 cl · <em>内容与变现一体共生</em></b>
+          <p>程雷团队起号之初便跳出同质化内卷，确立差异化核心：内容与变现同步生长、一体共生，不做流量沉淀与商业变现的时间分割，从根源解决流量浪费、变现乏力问题。依托「微信豆+ADQ」广豆联投，搭建"前置种草→预约锁客→直播转化"全链路闭环。</p>
+        </div>
+        <div class="ph"><div class="iw"><img src="images/image9.png" alt="程雷形象照"></div><figcaption>程雷形象照</figcaption></div>
+      </div>
+
+      <h4>三大品牌合作打法（短直一体落地案例）</h4>
+      <div class="grid g3">
+        <div class="brand-case">
+          <div class="bimg"><img src="images/image12.jpg" alt="碧云泉饮水机"></div>
+          <div class="bctn">
+            <span class="tag">工厂溯源</span>
+            <b>碧云泉 · 饮水机</b>
+            <span>高端净水品牌长期热销。搭建"短视频种草+直播转化"短直联动链路，「达人公信力+品牌口碑」双背书 ADQ 投放，精准拉升预约量与 GMV，降低决策门槛与退货率。</span>
+          </div>
+        </div>
+        <div class="brand-case">
+          <div class="bimg"><img src="images/image10.jpg" alt="叶聚兴粽子"></div>
+          <div class="bctn">
+            <span class="tag">品牌故事</span>
+            <b>叶聚兴 · 粽子</b>
+            <span>上海百年老字号，受地域限制、线上声量薄弱。通过 ADQ 精细化定向，挖掘百年匠心故事，打破地域流量壁垒，助力 GMV 爆发式增长，入选平台官方扶持榜单。</span>
+          </div>
+        </div>
+        <div class="brand-case">
+          <div class="bimg"><img src="images/image11.jpg" alt="肉鲜森牛肉"></div>
+          <div class="bctn">
+            <span class="tag">达人菜谱</span>
+            <b>肉鲜森 · 牛肉</b>
+            <span>生鲜品牌联动垂类达人打造烹饪食谱、知识科普、场景种草矩阵。ADQ 精准打标，快速筛选高意向生鲜用户，搭建稳定可持续的视频号分销体系。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>进阶 · ADQ 赋能内容破圈</h3>
+      <p class="lead">依托「<b style="color:var(--purple)">微信豆 + ADQ</b>」广豆联投，搭建"前置种草 → 预约锁客 → 直播转化"的全链路闭环。每场大场前一周优先放量工厂溯源、主理人对谈、实景测评等优质原生短视频，精准筛选品质消费用户。</p>
+      <div class="grid g2" style="margin-top:6px">
+        <div class="feat"><b>梦百合</b><span>创始人对谈短视频经 ADQ 放量触发自然流量爆发，突破高客单床垫决策周期长、转化难的行业痛点。</span></div>
+        <div class="feat"><b>罗莱家纺</b><span>依托互选广告前置种草，走访资深老客输出居家睡眠、品质家居内容，精准触达高端用户。</span></div>
+      </div>
+      <figure style="margin-top:16px"><div class="img-wrap"><img src="images/image13.png" alt="互选商单案例"></div><figcaption>互选商单案例</figcaption></figure>
+      <figure style="margin-top:14px"><div class="img-wrap"><img src="images/程雷梦百合超品日.jpeg" alt="梦百合超品日"></div><figcaption>梦百合超品日</figcaption></figure>
+    </div>
+
+  </section>
+
+  <!-- ============ 03 五步法合作达人 ============ -->
+  <section class="panel" id="sec-3">
+    <div class="sec-title">怎么做达播？<b>达人合作五步法</b></div>
+    <div class="sec-sub">把"碰运气"变成<b>一条流程</b>——五步环环相扣，每一步都有明确的下一步动作</div>
+
+    <div class="card">
+      <h3>观念纠正 · 粉丝量 ≠ 带货能力</h3>
+      <p class="lead">很多商家找达人第一反应是看粉丝量。但<b style="color:var(--purple)">品类不对、价格带不对、人群不对，粉丝再多也可能一单都接不住</b>。视频号生态中达人带货贡献了相当大的交易规模，新商家可借助合适达人扩大成交机会——前提是<b>先看匹配，再看体量</b>。</p>
+    </div>
+
+    <div class="flow">
+      <div class="f"><div class="n">1</div><b>找</b><span>达人广场<br>建立候选名单</span></div>
+      <div class="f"><div class="n">2</div><b>选</b><span>三重匹配<br>筛选合适达人</span></div>
+      <div class="f"><div class="n">3</div><b>联</b><span>四段式<br>建联消息</span></div>
+      <div class="f"><div class="n">4</div><b>做</b><span>寄样履约<br>执行落地</span></div>
+      <div class="f"><div class="n">5</div><b>复</b><span>数据复盘<br>复投决策</span></div>
+    </div>
+
+    <!-- 第一步 找 -->
+    <div class="card">
+      <h3>第一步 · 找｜达人广场建候选名单</h3>
+      <p><b style="color:var(--purple)">操作路径：</b>微信小店后台 → 优选联盟 → 达人广场 → 候选名单</p>
+      <p>达人广场是商家与达人见面的官方撮合场，集中了视频号生态内可合作的带货达人。可浏览达人信息、查看带货数据并筛选。</p>
+      <div class="grid g2" style="margin-top:8px">
+        <div class="feat"><div class="ic">🚫</div><b>不要一上来就到处私信</b><span>盲目群发不仅效率低下，还可能被平台判定为骚扰行为。</span></div>
+        <div class="feat"><div class="ic">📋</div><b>先建立候选名单</b><span>系统化浏览筛选，将有潜力的达人加入名单，形成自己的达人资源池。</span></div>
+      </div>
+      <h4>具体技巧</h4>
+      <p>• 利用筛选条件（品类、粉丝量、带货数据等）缩小范围<br>• 关注达人近期带货品类和频次，判断活跃度<br>• 将初步符合条件的达人批量加入候选名单，便于逐一比对</p>
+      <figure style="margin-top:14px"><div class="img-wrap"><img src="images/guide/image1.png" alt="达人广场"></div><figcaption>达人广场 · 候选名单</figcaption></figure>
+    </div>
+
+    <!-- 第二步 选 -->
+    <div class="card">
+      <h3>第二步 · 选｜三重匹配法详解</h3>
+      <p class="lead">筛选核心公式：<b style="color:var(--purple)">品类 × 客单价 × 人群画像</b>。三项都匹配，才值得进入下一轮建联。</p>
+      <div class="grid g3" style="margin-top:8px">
+        <div class="feat"><div class="ic">🏷️</div><b>① 品类契合</b><span>达人过去卖什么，决定用户为什么信他。卖美妆的达人不一定适合带粮油，跨品类信任度大降。</span></div>
+        <div class="feat"><div class="ic">💵</div><b>② 客单价匹配</b><span>商品价格是否在达人过去容易成交的区间内。价差过大易致转化失败。</span></div>
+        <div class="feat"><div class="ic">👥</div><b>③ 人群画像重合</b><span>年龄、性别、城市分布、消费场景需与目标顾客高度重合。</span></div>
+      </div>
+      <h4>三重匹配判断矩阵</h4>
+      <table>
+        <thead><tr><th>匹配维度</th><th>匹配良好</th><th>匹配一般</th><th>不匹配</th></tr></thead>
+        <tbody>
+          <tr><td>品类契合</td><td>达人主攻品类与商品一致</td><td>达人偶尔涉及该品类</td><td>从未涉及该品类</td></tr>
+          <tr><td>客单价匹配</td><td>商品价格在达人成交区间内</td><td>价差在 30% 以内</td><td>价差超过 50%</td></tr>
+          <tr><td>人群画像重合</td><td>核心人群高度重合</td><td>部分人群重合</td><td>人群几乎不重合</td></tr>
+        </tbody>
+      </table>
+      <figure style="margin-top:12px"><div class="img-wrap"><img src="images/guide/image2.png" alt="三重匹配"></div><figcaption>三重匹配示意图</figcaption></figure>
+      <h4>智能推荐：快速高效查找合适带货者</h4>
+      <p>如不知如何筛选，可参考平台智能推荐（基于你的账号推荐相关带货者）。路径：「操作 → 详情，可跳转带货者详情页邀约带货」。信息含带货者昵称、类目、带货评分、粉丝数、带货销售总额、直播/短视频/公众号销售额、推荐理由等。</p>
+      <figure style="margin-top:10px"><div class="img-wrap"><img src="images/guide/image3.png" alt="智能推荐"></div><figcaption>智能推荐 · 带货者详情</figcaption></figure>
+    </div>
+
+    <!-- 第三步 联 -->
+    <div class="card">
+      <h3>第三步 · 联｜四段式建联消息模板</h3>
+      <p>别只问"能帮我带货吗？"——模糊邀约无法让达人判断合作价值。四段式建联将合作信息结构化呈现，大幅提高回复率与成功率。</p>
+      <table>
+        <thead><tr><th style="width:10%">段落</th><th style="width:16%">主题</th><th>内容要点</th><th>写作建议</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>产品优势</td><td>为什么值得讲——产品卖点、差异化优势</td><td>一句话说清产品解决什么痛点，附关键数据（复购率/好评率）</td></tr>
+          <tr><td>02</td><td>合作方式</td><td>短视频 / 混场 / 专场</td><td>明确合作形式，让达人了解工作量级和内容形态</td></tr>
+          <tr><td>03</td><td>合作价值</td><td>样品、佣金、素材支持</td><td>列出具体收益与支持，佣金区间需真实</td></tr>
+          <tr><td>04</td><td>行动指引</td><td>给一个简单下一步</td><td>降低行动门槛，如"加微信寄样""点击链接查看详情"</td></tr>
+        </tbody>
+      </table>
+      <p class="note">⚠️ 示例数字必须替换成真实数据；每条消息做个性化调整，避免群发模板感；合作价值要具体（如"高清素材包+寄样手卡+专属链接"）。</p>
+    </div>
+
+    <!-- 第四步 做 -->
+    <div class="card">
+      <h3>第四步 · 做｜寄样履约执行清单</h3>
+      <p>达人同意合作后，执行环节决定合作能否顺利落地。五大关键环节：</p>
+      <h4>① 定价与佣金核算（先算清自己的成本账）</h4>
+      <table>
+        <thead><tr><th>成本项</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>商品毛利</td><td>售价减去进货/生产成本</td></tr>
+          <tr><td>平台费用</td><td>微信小店平台技术服务费等</td></tr>
+          <tr><td>物流成本</td><td>快递费、包装费</td></tr>
+          <tr><td>售后成本</td><td>退换货率预估、客服人力</td></tr>
+          <tr><td>投流成本</td><td>如需配合投流推广的预算</td></tr>
+        </tbody>
+      </table>
+      <h4>② 寄样手卡制作</h4>
+      <p>寄样附上手卡，帮达人快速理解产品，降低沟通成本：一句话卖点、目标人群、使用场景、关键数据（销量/好评率/复购率）。</p>
+      <h4>③ 素材包准备</h4>
+      <div class="grid g3">
+        <div class="feat"><b>高质量图片</b><span>白底图、场景图、细节图、对比图</span></div>
+        <div class="feat"><b>短视频素材</b><span>产品展示、使用教程、用户反馈</span></div>
+        <div class="feat"><b>商品资料</b><span>参数、卖点文案、FAQ</span></div>
+      </div>
+      <h4>④ 履约保障</h4>
+      <p>客服响应（带货期间在线）、发货时效（提前备货）、售后处理（建立退换货流程，避免影响达人口碑）。</p>
+      <h4>⑤ 专属链接创建</h4>
+      <p>在优选联盟为每位达人创建专属链接，用于追踪销量、佣金结算、效果评估，为复盘和复投决策提供数据支撑。</p>
+    </div>
+
+    <!-- 第五步 复 -->
+    <div class="card">
+      <h3>第五步 · 复｜数据复盘方法</h3>
+      <h4>四大核心指标</h4>
+      <table>
+        <thead><tr><th style="width:20%">指标</th><th>含义</th><th>分析角度</th></tr></thead>
+        <tbody>
+          <tr><td>销售额</td><td>达人带货期间总成交金额</td><td>是否达到预期目标</td></tr>
+          <tr><td>新增粉丝</td><td>合作期间店铺新增粉丝数</td><td>达人带来的品牌曝光价值</td></tr>
+          <tr><td>佣金支出</td><td>支付给达人的佣金总额</td><td>与销售额占比是否合理</td></tr>
+          <tr><td>ROI</td><td>投入产出比（销售额/总成本）</td><td>是否盈利、是否值得复投</td></tr>
+        </tbody>
+      </table>
+      <h4>复盘核心三问</h4>
+      <div class="grid g3">
+        <div class="feat"><div class="ic">✅</div><b>哪些内容表现好？</b><span>什么形式效果最好？哪些卖点引起共鸣？</span></div>
+        <div class="feat"><div class="ic">🔧</div><b>哪里还能优化？</b><span>佣金结构、素材支持、履约环节是否有改进空间</span></div>
+        <div class="feat"><div class="ic">🔁</div><b>值得复投吗？</b><span>基于 ROI 和长期潜力，判断是否继续合作</span></div>
+      </div>
+      <h4>达人档案表（持续追踪）</h4>
+      <p>一次合作的意义是找到长期合作伙伴。建议为每位合作达人建立档案表：达人名称/ID、合作日期、合作形式、销售额、ROI、粉丝转化、复投决策。</p>
+    </div>
+
+    <div class="quote">
+      先匹配，再沟通 → 先算清，再合作 → 有数据，再复投
+      <small>达人带货不是"广撒网"的流量游戏，而是一套系统化执行、数据化复盘的专业流程</small>
+    </div>
+
+    <!-- 课后行动清单 -->
+    <div class="actions">
+      <h3 style="margin-bottom:4px">课后行动 · 四个实操动作</h3>
+      <p class="lead" style="margin-bottom:14px">学完即做，把方法论落地为实际行动——<b style="color:var(--purple)">懂了就能动</b></p>
+      <div class="alist">
+        <div class="ai"><div class="n">1</div><div><span class="step-tag">第一步 · 找</span><b>找 3 位候选人</b><span>在达人广场筛选出 3 位品类、风格与商品契合的达人，加入候选名单。</span></div></div>
+        <div class="ai"><div class="n">2</div><div><span class="step-tag">第二步 · 选</span><b>做三重匹配</b><span>对 3 位候选人逐一完成品类 × 客单价 × 人群画像匹配分析。</span></div></div>
+        <div class="ai"><div class="n">3</div><div><span class="step-tag">第三步 · 联</span><b>写建联消息</b><span>基于四段式模板撰写个性化建联消息，使用真实数据。</span></div></div>
+        <div class="ai"><div class="n">4</div><div><span class="step-tag">第四、五步 · 做+复</span><b>做寄样手卡</b><span>准备寄样手卡模板，建立达人档案表框架。</span></div></div>
+      </div>
+    </div>
+
+    <!-- 头部达人合作小妙招（合并自原 04） -->
+    <div class="card" style="margin-top:22px">
+      <h3>附 · 头部达人合作妙招</h3>
+      <p class="lead" style="margin-bottom:14px">与头部达人合作的三条实战经验</p>
+      <div class="bg-info">
+        <div class="tt">📌 <b>头部达人合作沟通流程长</b>，往往需要数周，前置准备充分才能避免临场被动。</div>
+        <div class="chain">
+          <span class="ch">建联沟通</span><span class="arr">→</span>
+          <span class="ch">寄样确认</span><span class="arr">→</span>
+          <span class="ch">档期排期</span><span class="arr">→</span>
+          <span class="ch">内容预热</span><span class="arr">→</span>
+          <span class="ch">直播执行</span>
+        </div>
+        <div class="tip">以下三点需<b>提前规划</b>，才能在大场期稳住节奏、最大化合作效果：</div>
+      </div>
+      <div class="grid g3">
+        <div class="feat"><div class="ic">⏰</div><b>尽量提前沟通</b><span>头部达人档期紧张，需尽早开启合作流程，预留充足的备货与排期时间。</span></div>
+        <div class="feat"><div class="ic">🔀</div><b>减少店播同品分流</b><span>建设达人专属机制。某品牌大场期，达人 A 主推店播同款形成直接竞争；同期其他达人播其他品、货品错位，则无明显分流压力。</span></div>
+        <div class="feat"><div class="ic">🎤</div><b>增强助播配合</b><span>区别于抖音，视频号达人依赖品牌助播塑品提升转化，"强助播"成为达人选品的重要参考指标。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ADQ放大GMV ============ -->
+  <section class="panel" id="sec-4">
+    <div class="sec-title">如何放大达播势能？<b>ADQ 带来确定性增长</b></div>
+    <div class="sec-sub">从自然流到 ADQ，达人 GMV 增长的完整方法论</div>
+
+    <div class="card">
+      <h3>阶段 · 达人 GMV 增长路径</h3>
+      <p class="lead" style="margin-bottom:6px">从自然流到 ADQ，GMV 逐级递增。<b style="color:var(--pink)">单场 GMV 达到 50 万</b>是 ADQ 介入的关键门槛。</p>
+      <div class="thr"><span>单场 GMV 50万 · ADQ 介入门槛</span></div>
+      <div class="stages">
+        <div class="sg s1">
+          <div class="bar"><div class="nm">阶段一<br>自然流打基础</div><div class="pct">积累粉丝 · 自然流</div></div>
+          <div class="desc"><b>做什么</b>发优质短视频，积累粉丝和自然流<em>关键动作：直播间弹窗、口播引导预约</em></div>
+        </div>
+        <div class="sg s2">
+          <div class="bar"><div class="nm">阶段二<br>微信豆小步试水</div><div class="pct">付费投放认知建立</div></div>
+          <div class="desc"><b>做什么</b>用微信豆助推短视频和直播间<em>关键动作：激活老粉，建立付费投放认知</em></div>
+        </div>
+        <div class="sg s3">
+          <div class="bar"><span class="badge">ADQ 介入 · 单场 GMV ≥50万</span><div class="nm">阶段三<br>ADQ 规模化拉新</div><div class="pct">预约蓄水 → 下单爆发</div></div>
+          <div class="desc"><b>做什么</b>启动 ADQ 付费投放<em>关键动作：预约蓄水 → 模型沉淀 → 下单爆发 GMV</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>节奏 · 一场直播的投放节奏</h3>
+      <div class="tl">
+        <div class="ti">
+          <div class="when">提前 7-10 天</div>
+          <div class="act">互选商单种草（头部大场适用）</div>
+          <div class="why">达人拍种草短视频，提前触达潜客</div>
+        </div>
+        <div class="ti">
+          <div class="when">提前 5-7 天</div>
+          <div class="act">自然流预约启动</div>
+          <div class="why">发布预约引导短视频 + 直播间弹窗</div>
+        </div>
+        <div class="ti">
+          <div class="when">提前 3-5 天</div>
+          <div class="act">ADQ 付费预约启动</div>
+          <div class="why">成本最优（2-4 元/个），规模最大</div>
+        </div>
+        <div class="ti">
+          <div class="when">提前 1 天</div>
+          <div class="act">广告计划搭建过审</div>
+          <div class="why">搭建下单计划并提交审核，防止当天卡审</div>
+        </div>
+        <div class="ti now">
+          <div class="when">直播当天</div>
+          <div class="act">停止预约，全力下单</div>
+          <div class="why">预算全部转向下单 OG</div>
+        </div>
+      </div>
+      <h4>预约 vs 下单，分别干什么？</h4>
+      <table>
+        <thead><tr><th style="width:20%">对比</th><th>🔔 预约蓄水</th><th>🛒 下单转化</th></tr></thead>
+        <tbody>
+          <tr><td>一句话</td><td>直播前锁定"确定会来"的人</td><td>直播中把在线观众变成买单用户</td></tr>
+          <tr><td>投放时机</td><td>直播前 3-7 天</td><td>直播当天</td></tr>
+          <tr><td>核心数据</td><td>成本 2-4 元/个，进房率 30-50%，GPM 是自然流 2-4 倍</td><td>直接关联 GMV，是投放预算的绝对主力</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;color:var(--purple);font-weight:700">→ 简单理解：预约保你开播有人气，下单保你直播有 GMV。</p>
+    </div>
+
+    <div class="bars">
+      <div class="sec-title" style="font-size:22px;margin-bottom:16px">预算 · <b>不同达人怎么分</b></div>
+
+      <div class="grp">
+        <div class="gt">🌟 成熟达人（单场 GMV 稳定 ≥100 万）<span class="badge">重下单</span></div>
+        <div class="row"><div class="lb">预约蓄水</div>
+          <div class="track"><div class="fill purple" style="width:20%">20%</div></div></div>
+        <div class="row"><div class="lb">下单爆发</div>
+          <div class="track"><div class="fill blue" style="width:80%">80%</div></div></div>
+        <p class="note">→ 自然流已有基础人气，重心放在直播当天的下单转化</p>
+      </div>
+
+      <div class="grp">
+        <div class="gt">💪 潜力达人（单场 GMV &lt; 100 万）<span class="badge">重预约</span></div>
+        <div class="row"><div class="lb">预约蓄水</div>
+          <div class="track"><div class="fill purple" style="width:70%">70%</div></div></div>
+        <div class="row"><div class="lb">下单转化</div>
+          <div class="track"><div class="fill blue" style="width:30%">30%</div></div></div>
+        <p class="note">→ 预约是最高性价比的增量杠杆，用预约人群撬动开播 GMV</p>
+      </div>
+    </div>
+
+    <div class="quote">
+      成熟达人重下单，潜力达人重预约。
+      <small>预算怎么分，取决于你现在的流量底盘。</small>
+    </div>
+  </section>
+
+  <!-- ============ 06 甄选达人团 ============ -->
+  <section class="panel" id="sec-5">
+    <div class="sec-title">美好生活月的<b>达播矩阵</b></div>
+    <div class="sec-sub">欢迎关注我们的甄选达人团，<b>期待与更多商家长期合作</b></div>
+    <div class="card">
+      <p class="lead">这里号召大家关注，并展示我们拥有的达人资源，期待商家们以后<b style="color:var(--purple)">多多合作</b>，共赢美好生活月！</p>
+    </div>
+    <figure>
+      <div class="img-wrap"><img src="images/image14.jpg" alt="好物甄选达人团"></div>
+      <figcaption>「鹅选美好生活月」好物甄选达人团</figcaption>
+    </figure>
+    <div class="cta" style="margin-top:24px">
+      <h2>期待与你的下一次合作 🎉</h2>
+      <p>关注甄选达人团 · 一起把生意做得更美好</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>美好生活节 · 达播培训 · 面向微信小店商家 &nbsp;|&nbsp; 浅色蓝紫梦幻主题</footer>
+
+<button class="totop" id="totop" aria-label="回到顶部">↑</button>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  const panels=document.querySelectorAll('.panel');
+  // tab 栏目录：点击平滑跳转到对应板块（偏移 sticky tab 栏高度）
+  const OFFSET=150;
+  tabs.forEach(t=>{
+    t.addEventListener('click',()=>{
+      const target=document.getElementById(t.dataset.tab);
+      if(!target) return;
+      const y=target.getBoundingClientRect().top+window.pageYOffset-OFFSET;
+      window.scrollTo({top:y,behavior:'smooth'});
+    });
+  });
+  // 滚动监听：高亮当前可见章节对应的 tab
+  function spy(){
+    const scrollY=window.scrollY;
+    let current=panels[0].id;
+    panels.forEach(p=>{
+      if(p.offsetTop-OFFSET<=scrollY) current=p.id;
+    });
+    tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===current));
+  }
+  window.addEventListener('scroll',spy,{passive:true});
+  spy();
+
+  // 回到顶部按钮
+  const totop=document.getElementById('totop');
+  function toggleTop(){
+    if(window.scrollY>400) totop.classList.add('show');
+    else totop.classList.remove('show');
+  }
+  totop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  window.addEventListener('scroll',toggleTop,{passive:true});
+  toggleTop();
+</script>
+</body>
+</html>
