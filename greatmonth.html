@@ -118,6 +118,10 @@
   .bullets{margin:8px 0 0;padding-left:0;list-style:none}
   .bullets li{position:relative;padding-left:16px;margin:5px 0;font-size:13.5px;color:var(--ink2);line-height:1.6}
   .bullets li::before{content:"✓";position:absolute;left:0;color:var(--purple);font-weight:800}
+  .plays{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+  .pl{background:rgba(255,255,255,.6);border:1px solid rgba(124,92,255,.18);border-radius:11px;padding:10px 12px;text-align:left}
+  .pl b{font-size:13.5px;color:var(--ink);display:block;margin-bottom:4px;line-height:1.4;font-weight:800}
+  .pl span{font-size:12.5px;line-height:1.6;color:var(--ink2)}
 
   /* 场景直播分组：两列对照布局 */
   .zibg{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;margin-top:6px}
@@ -803,12 +807,17 @@
         <div class="feat">
           <div class="ic">📹</div>
           <b>视频号原生内容推广 <span class="prod-tag">全量开放 · 无需加白</span></b>
-          <span>用达人主页短视频投放下单 OG——<b>内容即广告</b>。</span>
-          <ul class="bullets">
-            <li>原生体验：用户感知为自然内容</li>
-            <li>零成本素材：复用已发布挂车短视频</li>
-            <li>全时段覆盖：直播赚爆发，短视频赚长尾</li>
-          </ul>
+          <span>用达人主页短视频投放下单 OG——<b>内容即广告</b>，原生气感、零成本素材、全时段覆盖。</span>
+          <div class="plays">
+            <div class="pl">
+              <b>🎬 短视频引流直播间（推广直播间）</b>
+              <span>对主页视频（不管挂不挂车）进行加热，引流至直播间——为大场蓄水、拉在线人气。</span>
+            </div>
+            <div class="pl">
+              <b>🛒 短视频挂车带货（推广小店商品）</b>
+              <span>对挂小店购物车的主页视频进行加热，目标是商品成交。<b style="color:var(--purple)">链路支持达人分佣</b>，挂车短视频本身就是带货成交入口。</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
