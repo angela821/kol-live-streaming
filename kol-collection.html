@@ -380,6 +380,25 @@
     gap: 14px;
     flex: 1;
   }
+
+  /* 横排布局：左图右文（优秀达人每周推荐）·横屏一屏看完一位达人全部信息 */
+  .case-card.image-side {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .case-card.image-side .case-cover {
+    flex: 0 0 40%;
+    aspect-ratio: auto;
+  }
+  .case-card.image-side .case-cover img {
+    height: 100%;
+    object-fit: cover;
+  }
+  .case-card.image-side .case-body {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: flex-start;
+  }
   .case-meta {
     display: flex;
     flex-wrap: wrap;
@@ -562,6 +581,10 @@
   .footer .row { margin-top: 6px; }
 
   /* ============ 响应式 ============ */
+  @media (max-width: 860px) {
+    .case-card.image-side { flex-direction: column; }
+    .case-card.image-side .case-cover { flex: none; aspect-ratio: 3 / 4; }
+  }
   @media (max-width: 640px) {
     .hero { padding: 56px 20px 72px; }
     .tabs { padding: 18px 16px 6px; }
@@ -732,6 +755,7 @@
           url: 'https://mp.weixin.qq.com/s/622ceP9tIxnT0blDQej37A',
           image: 'zmake.jpg',
           type: 'image',
+          layout: 'side',
           stats: [
             { label: '冷启动周期', value: '7<small>天</small>' },
             { label: '投放 ROI', value: '0.3 → 10+', hot: true },
@@ -752,6 +776,7 @@
           url: 'https://mp.weixin.qq.com/s/s1suCRAJb6MTnLUPwmfMkg',
           image: 'jialing.jpg',
           type: 'image',
+          layout: 'side',
           stats: [
             { label: '投放 ROI', value: '突破 10', hot: true },
             { label: '直播场景', value: '混场/低客单' },
@@ -956,7 +981,7 @@
 
     list.forEach((c) => {
       const card = document.createElement('article');
-      card.className = 'case-card';
+      card.className = 'case-card' + (c.layout === 'side' ? ' image-side' : '');
 
       const isSideAvatar = c.type === 'side-avatar' && c.image;
 
