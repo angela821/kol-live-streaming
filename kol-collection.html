@@ -381,23 +381,23 @@
     flex: 1;
   }
 
-  /* 横排布局：左图右文（优秀达人每周推荐）·横屏一屏看完一位达人全部信息 */
+  /* 横排布局：左图右文（优秀达人每周推荐）·图片按原比例完整显示，不裁切 */
   .case-card.image-side {
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
   }
   .case-card.image-side .case-cover {
-    flex: 0 0 40%;
+    flex: 0 0 38%;
     aspect-ratio: auto;
   }
   .case-card.image-side .case-cover img {
-    height: 100%;
-    object-fit: cover;
+    width: 100%;
+    height: auto;
+    display: block;
   }
   .case-card.image-side .case-body {
     flex: 1 1 0;
     min-width: 0;
-    justify-content: flex-start;
   }
   .case-meta {
     display: flex;
