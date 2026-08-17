@@ -582,6 +582,46 @@
   .footer .row { margin-top: 6px; }
 
   /* ============ 响应式 ============ */
+  /* 三级达人 Tab 样式 */
+  .tab-btn.sub {
+    font-size: 12.5px;
+    padding: 6px 14px;
+  }
+  /* 回到顶部按钮 */
+  #back-to-top {
+    position: fixed;
+    right: 28px;
+    bottom: 36px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #296bef, #7c5cff);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 24px -8px rgba(41, 107, 239, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 999;
+  }
+  #back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  #back-to-top:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -8px rgba(41, 107, 239, 0.75);
+  }
+  #back-to-top svg {
+    width: 22px;
+    height: 22px;
+  }
   @media (max-width: 860px) {
     .case-card.image-side { flex-direction: column; }
     .case-card.image-side .case-cover { flex: none; aspect-ratio: 3 / 4; }
@@ -647,6 +687,15 @@
       </div>
       <div class="tab-list" id="theme-tabs"></div>
     </div>
+    <!-- 三级 Tab：达人名字（仅 t2/t3 等多位达人时显示） -->
+    <div class="tab-group" id="case-tab-group" style="display:none;">
+      <div class="tab-label">
+        <span class="tag" style="background:linear-gradient(135deg,#ff5a8a,#7c5cff);">三级</span>
+        <span>达人</span>
+        <span style="color:#9aa5c0;">（点击切换查看）</span>
+      </div>
+      <div class="tab-list" id="case-tabs"></div>
+    </div>
   </div>
 
   <!-- 当前语境说明 -->
@@ -664,6 +713,11 @@
 <footer class="footer">
   <div>繁星计划 · 带货达人 CASE 集锦</div>
 </footer>
+
+<!-- 回到顶部按钮 -->
+<button id="back-to-top" aria-label="回到顶部" title="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <script>
   // ============ 数据源（与更新后的 docx 表格完全一致） ============
@@ -817,12 +871,15 @@
   // ============ 状态 ============
   let state = {
     pr: 'node1',
-    theme: 't1'
+    theme: 't1',
+    case: 0  // 三级：达人序号（0=全部）
   };
 
   // ============ 渲染 ============
   const $prTabs = document.getElementById('pr-tabs');
   const $themeTabs = document.getElementById('theme-tabs');
+  const $caseTabs = document.getElementById('case-tabs');
+  const $caseTabGroup = document.getElementById('case-tab-group');
   const $context = document.getElementById('context-bar');
   const $cases = document.getElementById('cases');
   const $empty = document.getElementById('empty');
@@ -844,6 +901,27 @@
   }
 
   function renderContext() {
+    // 渲染三级达人 Tab（仅 t2/t3 多达人时显示）
+    const list = DATA.cases[state.theme] || [];
+    if (list.length > 1) {
+      $caseTabGroup.style.display = '';
+      $caseTabs.innerHTML = '';
+      const allBtn = document.createElement('button');
+      allBtn.className = 'tab-btn sub' + (state.case === 0 ? ' is-active' : '');
+      allBtn.textContent = '全部';
+      allBtn.addEventListener('click', () => { state.case = 0; render(); });
+      $caseTabs.appendChild(allBtn);
+      list.forEach((c, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn sub' + (state.case === i + 1 ? ' is-active' : '');
+        btn.textContent = c.name;
+        btn.addEventListener('click', () => { state.case = i + 1; render(); });
+        $caseTabs.appendChild(btn);
+      });
+    } else {
+      $caseTabGroup.style.display = 'none';
+    }
+
     const pr = DATA.prNodes.find(n => n.id === state.pr);
     const theme = (DATA.themes[state.pr] || []).find(t => t.id === state.theme);
     const list = DATA.cases[state.theme] || [];
@@ -992,7 +1070,9 @@
   }
 
   function renderCases() {
-    const list = DATA.cases[state.theme] || [];
+    const allList = DATA.cases[state.theme] || [];
+    // 三级 tab 选中：只显示该达人
+    const list = state.case > 0 ? (allList[state.case - 1] ? [allList[state.case - 1]] : []) : allList;
     $cases.innerHTML = '';
     if (list.length === 0) {
       $empty.style.display = 'block';
@@ -1074,6 +1154,8 @@
     if (!themes.find(t => t.id === state.theme)) {
       state.theme = themes[0] ? themes[0].id : '';
     }
+    // 切换节点/主题时重置达人选择
+    state.case = 0;
     renderThemeTabs();
     renderContext();
     renderCases();
@@ -1087,6 +1169,15 @@
     const themes = DATA.themes[state.pr] || [];
     state.theme = themes[0] ? themes[0].id : '';
     render();
+  });
+
+  // 回到顶部按钮
+  const $btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    $btt.classList.toggle('show', window.scrollY > 400);
+  }, { passive: true });
+  $btt.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   render();
