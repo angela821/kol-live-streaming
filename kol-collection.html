@@ -924,7 +924,6 @@
 
     const pr = DATA.prNodes.find(n => n.id === state.pr);
     const theme = (DATA.themes[state.pr] || []).find(t => t.id === state.theme);
-    const list = DATA.cases[state.theme] || [];
     const count = list.length;
 
     // 计算达人画像 / 主图（caption 含"主图/主海报/合集"为主图）
