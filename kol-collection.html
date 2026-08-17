@@ -892,10 +892,6 @@
       btn.className = 'tab-btn' + (t.id === state.theme ? ' is-active' : '');
       btn.textContent = t.name;
       btn.dataset.theme = t.id;
-      btn.addEventListener('click', () => {
-        state.theme = t.id;
-        render();
-      });
       $themeTabs.appendChild(btn);
     });
   }
@@ -1153,20 +1149,28 @@
     if (!themes.find(t => t.id === state.theme)) {
       state.theme = themes[0] ? themes[0].id : '';
     }
-    // 切换节点/主题时重置达人选择
-    state.case = 0;
     renderThemeTabs();
     renderContext();
     renderCases();
   }
 
-  // PR Tab 点击
+  // 切换 PR 节点时重置主题和达人选择
   $prTabs.addEventListener('click', e => {
     const btn = e.target.closest('.tab-btn');
     if (!btn) return;
     state.pr = btn.dataset.pr;
     const themes = DATA.themes[state.pr] || [];
     state.theme = themes[0] ? themes[0].id : '';
+    state.case = 0;
+    render();
+  });
+
+  // 切换主题时重置达人选择
+  $themeTabs.addEventListener('click', e => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    state.theme = btn.dataset.theme;
+    state.case = 0;
     render();
   });
 
